@@ -148,7 +148,7 @@ def make_special_call(name, *args):
 
 integer_format = r'\d+'
 float_format = r'(\d+\.\d*(e[+-]?\d+)?|\.\d+(e[+-]?\d+)?|\d+e[+-]?\d+)'
-name_format = r'[a-zA-Z_]\w*'
+name_format = r'[a-zA-Z_\u4e00-\u9fa5]\w*'
 
 keywords = {
     'and',
@@ -173,6 +173,7 @@ keywords = {
     'join',
     'leading',
     'left',
+    'outer',
     'like',
     'limit',
     'not',
@@ -450,7 +451,7 @@ table_like = m.transform(
             m.construct(
                 a.Join,
                 m.keyword(how=m.any(
-                    verbatim_token('inner', 'left', 'right'),
+                    verbatim_token('inner', 'left', 'right','outer'),
                     m.literal('inner'),
                 )),
                 svtok('join'), m.keyword(right=table_like),
